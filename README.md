@@ -44,7 +44,7 @@ A modern, lightweight Content Management System (CMS) and blogging platform buil
 | **Authentication** | Devise |
 | **Rich Text** | Action Text (Trix) |
 | **File Uploads** | Active Storage |
-| **Deployment** | Docker, Kamal, Railway |
+| **Deployment** | Docker, Kamal |
 
 ## 📋 Requirements
 
@@ -191,23 +191,6 @@ bin/rails test:system
 
 ## 🚢 Deployment
 
-### Railway Deployment (Recommended for Production)
-
-Quick deploy to Railway:
-
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Run setup script
-bin/setup-railway
-
-# Deploy
-railway up
-```
-
-See [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) for detailed instructions.
-
 ### Docker Deployment
 
 miniCMS is configured for Docker deployment:
@@ -317,6 +300,10 @@ SOFTWARE.
 - [Devise](https://github.com/heartcombo/devise) - Authentication solution
 - [Bootstrap](https://getbootstrap.com/) - UI framework
 - [Trix](https://trix-editor.org/) - Rich text editor
+
+## 🤖 AI Development
+
+This application was built using **Qwen Code**, an AI-powered development assistant by Alibaba Group.
 
 ## 📞 Support
 
