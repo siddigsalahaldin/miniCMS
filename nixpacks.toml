@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ["ruby34", "nodejs_20", "sqlite", "postgresql"]
+aptPkgs = ["libyaml-dev", "libvips"]
+
+[phases.install]
+commands = [
+  "gem install bundler",
+  "bundle install --without development test"
+]
+
+[phases.build]
+commands = [
+  "bundle exec rails assets:precompile"
+]
+
+[start]
+cmd = "bin/rails server"

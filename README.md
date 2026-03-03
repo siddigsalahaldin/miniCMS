@@ -44,7 +44,7 @@ A modern, lightweight Content Management System (CMS) and blogging platform buil
 | **Authentication** | Devise |
 | **Rich Text** | Action Text (Trix) |
 | **File Uploads** | Active Storage |
-| **Deployment** | Docker, Kamal |
+| **Deployment** | Docker, Kamal, Railway |
 
 ## 📋 Requirements
 
@@ -191,6 +191,23 @@ bin/rails test:system
 
 ## 🚢 Deployment
 
+### Railway Deployment (Recommended for Production)
+
+Quick deploy to Railway:
+
+```bash
+# Install Railway CLI
+npm install -g @railway/cli
+
+# Run setup script
+bin/setup-railway
+
+# Deploy
+railway up
+```
+
+See [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) for detailed instructions.
+
 ### Docker Deployment
 
 miniCMS is configured for Docker deployment:
@@ -200,7 +217,7 @@ miniCMS is configured for Docker deployment:
 docker build -t minicms .
 
 # Run the container
-docker run -p 3000:3000 minicms
+docker run -d -p 3000:3000 -e RAILS_MASTER_KEY=<your-key> minicms
 ```
 
 ### Kamal Deployment
