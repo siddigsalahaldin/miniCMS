@@ -1,0 +1,192 @@
+<header class="main-header">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <!-- Logo/Brand -->
+      <%= link_to root_path, class: "navbar-brand d-flex align-items-center" do %>
+        <i class="bi bi-layers-half me-2"></i>
+        <span class="brand-text">mini<span class="brand-highlight">CMS</span></span>
+      <% end %>
+
+      <!-- Search Bar (Desktop) -->
+      <div class="d-none d-lg-flex flex-grow-1 mx-4">
+        <%= form_with url: search_path, method: :get, local: true, class: "w-100" do %>
+          <div class="input-group">
+            <%= text_field_tag :q, params[:q],
+                class: "form-control form-control-sm",
+                placeholder: t("nav.search_placeholder") %>
+            <button type="submit" class="btn btn-light btn-sm">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <!-- Mobile Search (visible only on mobile) -->
+          <li class="nav-item d-lg-none mb-3">
+            <%= form_with url: search_path, method: :get, local: true do %>
+              <div class="input-group">
+                <%= text_field_tag :q, params[:q],
+                    class: "form-control form-control-sm",
+                    placeholder: t("nav.search_mobile_placeholder") %>
+                <button type="submit" class="btn btn-light btn-sm">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            <% end %>
+          </li>
+
+          <!-- Public Links -->
+          <li class="nav-item">
+            <%= link_to root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" do %>
+              <i class="bi bi-house-door"></i> <%= t("nav.home") %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to posts_path, class: "nav-link #{current_page?(posts_path) ? 'active' : ''}" do %>
+              <i class="bi bi-journal-text"></i> <%= t("nav.posts") %>
+            <% end %>
+          </li>
+
+          <% if user_signed_in? %>
+            <!-- Authenticated User Links -->
+            <% if current_user.admin? %>
+              <li class="nav-item">
+                <%= link_to admin_dashboard_path, class: "nav-link" do %>
+                  <i class="bi bi-speedometer2"></i> <%= t("nav.admin") %>
+                <% end %>
+              </li>
+            <% end %>
+            <li class="nav-item">
+              <%= link_to new_post_path, class: "nav-link" do %>
+                <i class="bi bi-pencil-square"></i> <%= t("nav.new_post") %>
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to favorites_path, class: "nav-link #{current_page?(favorites_path) ? 'active' : ''}" do %>
+                <i class="bi bi-star-fill"></i> <%= t("nav.favorites") %>
+              <% end %>
+            </li>
+
+            <!-- Notifications -->
+            <li class="nav-item dropdown" data-controller="notifications" data-notifications-count-value="<%= current_user.unread_notifications_count %>">
+              <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-notifications-target="dropdown">
+                <i class="bi bi-bell"></i>
+                <% if current_user.unread_notifications_count > 0 %>
+                  <span id="notification-badge" data-notifications-target="badge" class="notification-badge position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger">
+                    <%= current_user.unread_notifications_count %>
+                  </span>
+                <% end %>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificationDropdown">
+                <li><h6 class="dropdown-header"><i class="bi bi-bell"></i> <%= t("nav.notifications") %></h6></li>
+                <li><hr class="dropdown-divider"></li>
+                <div id="notification-dropdown-content">
+                  <% current_user.recent_unread_notifications(5).each do |notification| %>
+                    <li>
+                      <a class="dropdown-item notification-item unread" href="<%= notification.link || notifications_path %>">
+                        <div class="d-flex align-items-start">
+                          <% if notification.actor %>
+                            <% if notification.actor.has_avatar? %>
+                              <%= image_tag url_for(notification.actor.avatar), class: "rounded-circle me-2", width: 32, height: 32 %>
+                            <% else %>
+                              <div class="bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <%= notification.actor.username.first.upcase %>
+                              </div>
+                            <% end %>
+                          <% end %>
+                          <div class="flex-grow-1">
+                            <small class="d-block text-truncate" style="max-width: 200px;"><%= notification.message %></small>
+                            <small class="text-muted"><%= time_ago_in_words_locale(notification.created_at) %></small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  <% end %>
+                  <% if current_user.notifications.unread.any? %>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><%= link_to t("nav.view_all_notifications"), notifications_path, class: "dropdown-item text-center small" %></li>
+                  <% else %>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item text-center small text-muted" href="#">
+                        <%= t("nav.no_new_notifications") %>
+                      </a>
+                    </li>
+                  <% end %>
+                </div>
+              </ul>
+            </li>
+
+            <!-- User Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle user-dropdown" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <% if current_user.has_avatar? %>
+                  <%= image_tag url_for(current_user.avatar), class: "avatar-small", alt: current_user.username %>
+                <% else %>
+                  <span class="avatar-placeholder"><%= current_user.username.first.upcase %></span>
+                <% end %>
+                <span class="ms-1 d-none d-lg-inline">
+                  <%= current_user.username %>
+                  <% if current_user.admin? %>
+                    <span class="badge badge-soft-danger ms-1" style="font-size: 0.6rem;"><%= t("common.admin_badge") %></span>
+                  <% elsif current_user.moderator? %>
+                    <span class="badge badge-soft-warning ms-1" style="font-size: 0.6rem;"><%= t("common.mod_badge") %></span>
+                  <% end %>
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                <li>
+                  <h6 class="dropdown-header">
+                    <i class="bi bi-person-circle"></i> <%= current_user.username %>
+                  </h6>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <%= link_to user_path(current_user), class: "dropdown-item" do %>
+                    <i class="bi bi-person"></i> <%= t("nav.profile") %>
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to edit_user_registration_path, class: "dropdown-item" do %>
+                    <i class="bi bi-gear"></i> <%= t("nav.settings") %>
+                  <% end %>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <%= button_to destroy_user_session_path, method: :delete, class: "dropdown-item text-danger" do %>
+                    <i class="bi bi-box-arrow-right"></i> <%= t("nav.sign_out") %>
+                  <% end %>
+                </li>
+              </ul>
+            </li>
+          <% else %>
+            <!-- Authentication Links -->
+            <li class="nav-item">
+              <%= link_to new_user_session_path, class: "nav-link" do %>
+                <i class="bi bi-box-arrow-in-right"></i> <%= t("nav.sign_in") %>
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to new_user_registration_path, class: "btn btn-outline-light ms-2" do %>
+                <i class="bi bi-person-plus"></i> <%= t("nav.sign_up") %>
+              <% end %>
+            </li>
+          <% end %>
+          
+          <!-- Language Switcher -->
+          <li class="nav-item ms-lg-2">
+            <%= render "shared/language_switcher" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

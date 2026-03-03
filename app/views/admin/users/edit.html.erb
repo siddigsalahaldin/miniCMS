@@ -1,0 +1,65 @@
+<% content_for :header_title, "Edit User" %>
+<% content_for :title, "Edit #{@user.username}" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="admin-table p-4">
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+          <h6 class="alert-heading"><i class="bi bi-exclamation-triangle"></i> <%= pluralize(@user.errors.count, "error") %> prevented this user from being saved:</h6>
+          <ul class="mb-0">
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <%= form_with model: @user, url: admin_user_path(@user), method: :patch, local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :username, class: "form-label" %>
+          <%= f.text_field :username, class: "form-control" %>
+        </div>
+        
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control" %>
+        </div>
+        
+        <div class="mb-3">
+          <%= f.label :bio, class: "form-label" %>
+          <%= f.text_area :bio, rows: 3, class: "form-control" %>
+        </div>
+        
+        <div class="mb-3">
+          <%= f.label :password, "Password (leave blank to keep current)", class: "form-label" %>
+          <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+          <small class="form-text text-muted">Leave blank to keep current password</small>
+        </div>
+        
+        <div class="mb-3">
+          <%= f.label :password_confirmation, "Confirm Password", class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+        </div>
+        
+        <div class="mb-3">
+          <%= f.label :role, class: "form-label" %>
+          <%= f.select :role, 
+              [["Member", 0], ["Moderator", 1], ["Administrator", 2]], 
+              { selected: @user.role || 0 }, 
+              { class: "form-select" } %>
+          <small class="form-text text-muted">
+            <strong>Member:</strong> Regular user<br>
+            <strong>Moderator:</strong> Can manage posts and comments<br>
+            <strong>Administrator:</strong> Full admin panel access
+          </small>
+        </div>
+        
+        <div class="d-flex gap-2">
+          <%= f.submit "Update User", class: "btn btn-primary" %>
+          <%= link_to "Cancel", admin_user_path(@user), class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

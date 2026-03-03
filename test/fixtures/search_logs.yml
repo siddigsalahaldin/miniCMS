@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  query: MyString
+  result_count: MyString
+  user: one
+
+two:
+  query: MyString
+  result_count: MyString
+  user: two

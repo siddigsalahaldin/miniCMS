@@ -1,0 +1,51 @@
+<% content_for :title, t("devise.sessions.sign_in") %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-5">
+        <div class="text-center mb-4">
+          <h1 class="h3 mb-2"><%= t("common.welcome_back") %></h1>
+          <p class="text-muted"><%= t("common.sign_in_to_account") %></p>
+        </div>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="mb-3">
+            <%= f.label :email, t("common.email"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: t("common.enter_email") %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, t("common.password"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: t("common.enter_password") %>
+            </div>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="mb-4 form-check">
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <%= f.label :remember_me, t("common.remember_me"), class: "form-check-label" %>
+            </div>
+          <% end %>
+
+          <%= f.submit t("nav.sign_in"), class: "btn btn-primary btn-lg w-100 mb-3" %>
+        <% end %>
+
+        <div class="text-center">
+          <p class="mb-2 text-muted">
+            <%= t("common.dont_have_account") %>
+            <%= link_to t("nav.sign_up"), new_registration_path(resource_name), class: "text-decoration-none" %>
+          </p>
+          <p class="mb-0">
+            <%= link_to t("common.forgot_password"), new_password_path(resource_name), class: "text-decoration-none" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

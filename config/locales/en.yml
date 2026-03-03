@@ -1,0 +1,226 @@
+en:
+  # Rails i18n datetime
+  datetime:
+    distance_in_words:
+      half_a_minute: "half a minute"
+      less_than_x_seconds:
+        one: "less than 1 second"
+        other: "less than %{count} seconds"
+      x_seconds:
+        one: "1 second"
+        other: "%{count} seconds"
+      less_than_x_minutes:
+        one: "less than a minute"
+        other: "less than %{count} minutes"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      about_x_hours:
+        one: "about 1 hour"
+        other: "about %{count} hours"
+      x_hours:
+        one: "1 hour"
+        other: "%{count} hours"
+      x_days:
+        one: "1 day"
+        other: "%{count} days"
+      about_x_months:
+        one: "about 1 month"
+        other: "about %{count} months"
+      x_months:
+        one: "1 month"
+        other: "%{count} months"
+      about_x_years:
+        one: "about 1 year"
+        other: "about %{count} years"
+      x_years:
+        one: "1 year"
+        other: "%{count} years"
+      over_x_years:
+        one: "over 1 year"
+        other: "over %{count} years"
+      almost_x_years:
+        one: "almost 1 year"
+        other: "almost %{count} years"
+
+  # Application
+  application_name: "miniCMS"
+  tagline: "A modern, lightweight content management system built with Ruby on Rails."
+  subtitle: "Create, manage, and share your content with ease."
+
+  # Navigation
+  nav:
+    home: "Home"
+    posts: "Posts"
+    new_post: "New Post"
+    favorites: "Favorites"
+    admin: "Admin"
+    sign_in: "Sign In"
+    sign_up: "Sign Up"
+    sign_out: "Sign Out"
+    profile: "Profile"
+    settings: "Settings"
+    notifications: "Notifications"
+    view_all_notifications: "View all notifications"
+    no_new_notifications: "No new notifications"
+    search_placeholder: "Search posts, users, comments..."
+    search_mobile_placeholder: "Search..."
+
+  # Footer
+  footer:
+    quick_links: "Quick Links"
+    resources: "Resources"
+    documentation: "Documentation"
+    api_reference: "API Reference"
+    support: "Support"
+    privacy_policy: "Privacy Policy"
+    get_in_touch: "Get in Touch"
+    email: "siddigsalahaldin@gmail.com"
+    location: "Sudan - Khartoum"
+    copyright: "All rights reserved."
+    built_with: "Built with"
+    using: "using"
+
+  # Common
+  common:
+    admin_badge: "Admin"
+    mod_badge: "Mod"
+    ago: "ago"
+    loading: "Loading..."
+    no_results: "No results found"
+    back: "Back"
+    cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    delete: "Delete"
+    confirm_delete: "Are you sure?"
+    by: "by"
+    write_a_comment: "Write a comment..."
+    post_comment: "Post Comment"
+    write_a_reply: "Write a reply..."
+    post_reply: "Post Reply"
+    reply: "Reply"
+    sign_in_to_comment: "Sign in to leave a comment."
+    about_author: "About the Author"
+    reactions: "Reactions"
+    favorite: "Favorite"
+    unfavorite: "Unfavorite"
+    draft: "Draft"
+    published: "Published"
+    unpublish: "Unpublish"
+    publish: "Publish"
+    posts: "Posts"
+    followers: "Followers"
+    following: "Following"
+    edit_profile: "Edit Profile"
+    no_posts: "No posts yet."
+    no_favorites: "No favorites yet"
+    start_exploring: "Start exploring and save posts you love!"
+    browse_posts: "Browse posts"
+    back_to_posts: "Back to Posts"
+    no_results_found: "No results found"
+    adjust_search: "Try adjusting your search terms or filters"
+    popular_searches: "Popular searches:"
+    search: "Search"
+    all: "All"
+    comments: "Comments"
+    users: "Users"
+    results_for: "Found %{count} result%{plural} for"
+    no_posts_yet: "No posts yet"
+    welcome_back: "Welcome Back"
+    sign_in_to_account: "Sign in to your account"
+    email: "Email"
+    password: "Password"
+    remember_me: "Remember me"
+    forgot_password: "Forgot your password?"
+    dont_have_account: "Don't have an account?"
+    already_have_account: "Already have an account?"
+    create_account: "Create an Account"
+    join_community: "Join our community today"
+    username: "Username"
+    username_hint: "3-30 characters, letters, numbers, and underscores only"
+    confirm_password: "Confirm Password"
+    password_hint: "Minimum %{count} characters"
+    create_password: "Create a password"
+    confirm_your_password: "Confirm your password"
+    enter_email: "your@email.com"
+    enter_password: "Enter your password"
+    choose_username: "Choose a username"
+    total_posts: "Total Posts"
+    total_users: "Total Users"
+    total_comments: "Total Comments"
+    this_week: "this week"
+    quick_actions: "Quick Actions"
+    manage_users: "Manage Users"
+    view_all: "View All"
+    author: "Author"
+    status: "Status"
+    joined: "Joined"
+    on: "on"
+    reply_to: "to"
+    delete_comment_confirm: "Delete this comment?"
+    follow: "Follow"
+    unfollow: "Unfollow"
+    no_notifications: "No Notifications"
+    caught_up: "You're all caught up! When you get notifications, they'll appear here."
+    mark_all_read: "Mark All Read"
+    all_marked_read: "All notifications marked as read."
+    notification_deleted: "Notification deleted."
+
+  # Language
+  language:
+    switch: "Language"
+    en: "English"
+    ar: "العربية"
+
+  # Posts
+  posts:
+    latest: "Latest Posts"
+    no_posts_yet: "No posts yet"
+    be_first: "Be the first to share your thoughts!"
+    create_post: "Create a post"
+    featured: "Featured Posts"
+    no_featured_posts: "No featured posts yet."
+    comments_count: "%{count} comments"
+    reactions_count: "%{count} reactions"
+
+  # Search
+  search:
+    title: "Search"
+    placeholder: "Search posts, users, and comments..."
+    button: "Search"
+    filter_all: "All"
+    filter_posts: "Posts"
+    filter_users: "Users"
+    filter_comments: "Comments"
+
+  # Admin
+  admin:
+    dashboard: "Dashboard"
+    posts: "Posts"
+    users: "Users"
+    comments: "Comments"
+
+  # Errors
+  errors:
+    not_found: "Page Not Found"
+    not_found_message: "The page you're looking for doesn't exist."
+    go_home: "Go to Homepage"
+    internal_error: "Internal Server Error"
+    internal_error_message: "Something went wrong on our end."
+    unprocessable: "Unprocessable Entity"
+    unprocessable_message: "We couldn't process your request."
+
+  # Devise
+  devise:
+    sessions:
+      sign_in: "Sign In"
+    registrations:
+      sign_up: "Sign Up"
+    passwords:
+      forgot: "Forgot your password?"
+      reset: "Reset Password"
+      send_reset: "Send Reset Instructions"
+      back_to_sign_in: "Back to Sign In"
+      no_account: "Don't have an account?"
+      have_account: "Already have an account?"

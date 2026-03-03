@@ -1,0 +1,57 @@
+<% content_for :header_title, "Posts" %>
+<% content_for :title, "Manage Posts" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="btn-group" role="group">
+    <%= link_to "All Posts", admin_posts_path(scope: 'all'), class: "btn btn-sm #{@scope == 'all' ? 'btn-primary' : 'btn-outline-primary'}" %>
+    <%= link_to "Published", admin_posts_path(scope: 'published'), class: "btn btn-sm #{@scope == 'published' ? 'btn-primary' : 'btn-outline-primary'}" %>
+    <%= link_to "Drafts", admin_posts_path(scope: 'draft'), class: "btn btn-sm #{@scope == 'draft' ? 'btn-primary' : 'btn-outline-primary'}" %>
+  </div>
+  <%= link_to "New Post", new_post_path, class: "btn btn-primary" %>
+</div>
+
+<div class="admin-table">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+        <th>Comments</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td>
+            <%= link_to truncate(post.title, length: 50), admin_post_path(post), class: "text-decoration-none fw-medium" %>
+          </td>
+          <td><%= link_to post.user.username, admin_user_path(post.user) %></td>
+          <td>
+            <% if post.published? %>
+              <span class="badge badge-soft-success">Published</span>
+            <% else %>
+              <span class="badge badge-soft-warning">Draft</span>
+            <% end %>
+          </td>
+          <td><span class="badge bg-secondary"><%= post.comments.count %></span></td>
+          <td class="text-muted small"><%= time_ago_in_words(post.created_at) %> ago</td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <%= link_to "View", admin_post_path(post), class: "btn btn-outline-secondary" %>
+              <%= link_to "Edit", edit_post_path(post), class: "btn btn-outline-primary" %>
+              <% if post.published? %>
+                <%= button_to "Unpublish", unpublish_admin_post_path(post), method: :patch, class: "btn btn-outline-warning" %>
+              <% else %>
+                <%= button_to "Publish", publish_admin_post_path(post), method: :patch, class: "btn btn-outline-success" %>
+              <% end %>
+              <%= button_to "Delete", admin_post_path(post), method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

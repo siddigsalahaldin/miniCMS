@@ -1,0 +1,21 @@
+<div class="language-switcher">
+  <div class="dropdown">
+    <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate"></i>
+      <span class="d-none d-lg-inline ms-1"><%= t("language.#{I18n.locale}") %></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+      <% I18n.available_locales.each do |locale| %>
+        <li>
+          <%= link_to locale_path(locale), class: "dropdown-item #{'active' if I18n.locale == locale}" do %>
+            <% if locale == :ar %>
+              <i class="bi bi-translate"></i> <%= t("language.ar") %>
+            <% else %>
+              <i class="bi bi-translate"></i> <%= t("language.en") %>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

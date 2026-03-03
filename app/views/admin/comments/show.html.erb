@@ -1,0 +1,35 @@
+<% content_for :header_title, "Comment Details" %>
+<% content_for :title, "Comment ##{@comment.id}" %>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="admin-table p-4">
+      <div class="mb-4">
+        <h6>Comment Content</h6>
+        <p class="mt-2"><%= @comment.body %></p>
+      </div>
+      
+      <div class="d-flex gap-2">
+        <%= link_to "View on Site", post_path(@comment.commentable, anchor: "comment-#{@comment.id}"), class: "btn btn-outline-primary", target: "_blank" %>
+        <%= button_to "Delete Comment", admin_comment_path(@comment), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-4">
+    <div class="admin-table p-4 mb-4">
+      <h6 class="mb-3">Comment Info</h6>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2"><strong>Author:</strong> <%= link_to @comment.user.username, admin_user_path(@comment.user) %></li>
+        <li class="mb-2"><strong>Created:</strong> <%= @comment.created_at.strftime("%B %d, %Y %H:%M") %></li>
+        <li class="mb-2"><strong>On:</strong> 
+          <% if @comment.commentable.is_a?(Post) %>
+            <%= link_to @comment.commentable.title, admin_post_path(@comment.commentable) %>
+          <% else %>
+            Reply to comment #<%= @comment.parent_id %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

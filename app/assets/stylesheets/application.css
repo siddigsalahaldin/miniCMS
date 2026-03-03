@@ -1,0 +1,629 @@
+/* Custom styles to complement Bootstrap 5 */
+
+/* ================================
+   Header / Navigation Styles
+   ================================ */
+.main-header .navbar {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0;
+}
+
+.main-header .navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.main-header .navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.main-header .brand-text {
+  color: #fff;
+}
+
+.main-header .brand-highlight {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.main-header .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s;
+  border-radius: 0.375rem;
+}
+
+.main-header .nav-link:hover,
+.main-header .nav-link.active {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.main-header .user-dropdown .avatar-small {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.main-header .avatar-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.main-header .dropdown-menu {
+  border: none;
+  border-radius: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.main-header .dropdown-header {
+  font-weight: 600;
+  color: #667eea;
+}
+
+/* ================================
+   Footer Styles
+   ================================ */
+.main-footer {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #cbd5e1;
+  margin-top: 4rem;
+}
+
+.main-footer .footer-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.main-footer .brand-text {
+  color: #fff;
+}
+
+.main-footer .brand-highlight {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.main-footer .footer-title {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.main-footer .footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-footer .footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.main-footer .footer-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.main-footer .footer-links a:hover {
+  color: #fff;
+  transform: translateX(5px);
+}
+
+.main-footer .footer-links i {
+  font-size: 0.75rem;
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.main-footer .footer-links a:hover i {
+  transform: translateX(3px);
+}
+
+.main-footer .footer-contact li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.main-footer .social-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.main-footer .social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.25rem;
+  transition: all 0.2s;
+}
+
+.main-footer .social-link:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.main-footer .footer-bottom {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Override Bootstrap's text-muted for better contrast in footer */
+.main-footer .text-muted {
+  color: #cbd5e1 !important;
+}
+
+.main-footer .text-reset {
+  color: #cbd5e1 !important;
+}
+
+/* ================================
+   Search Styles
+   ================================ */
+.search-header .input-group {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.search-header .form-control {
+  border: none;
+  padding: 0.75rem 1rem;
+}
+
+.search-header .form-control:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.search-header .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  padding: 0.75rem 1.5rem;
+}
+
+.search-filters .btn-group .btn {
+  margin: 0 0.25rem;
+}
+
+.search-filters .btn-group .btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: transparent;
+}
+
+.search-highlight {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+.search-results .list-group-item:hover {
+  background: #f8fafc;
+}
+
+.search-results .results-section {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.search-initial, .no-results {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.popular-searches .badge {
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+}
+
+.popular-searches .badge:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Notification Badge */
+.notification-badge {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.4rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-header .navbar-nav .dropdown-menu {
+  max-width: 350px;
+}
+
+.main-header .notification-item {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s;
+}
+
+.main-header .notification-item:hover {
+  background: #f8fafc;
+}
+
+.main-header .notification-item.unread {
+  background: #f0f7ff;
+}
+
+.main-header .notification-item:last-child {
+  border-bottom: none;
+}
+
+/* ================================
+   Main Content Area
+   ================================ */
+.main-content {
+  min-height: calc(100vh - 200px);
+}
+
+/* ================================
+   Post content styling for Action Text
+   ================================ */
+.post-content .trix-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.post-content .trix-content h1,
+.post-content .trix-content h2,
+.post-content .trix-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.post-content .trix-content p {
+  margin-bottom: 1rem;
+}
+
+.post-content .trix-content blockquote {
+  border-left: 4px solid #0d6efd;
+  padding-left: 1rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.post-content .trix-content pre {
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+}
+
+.post-content .trix-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+}
+
+/* Card hover effects */
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Animation for alerts */
+.alert {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Comment thread styling */
+.comment-replies {
+  border-left: 2px solid #e2e8f0;
+  padding-left: 1.5rem;
+}
+
+/* Follow button loading state */
+.follow-button form {
+  display: inline;
+}
+
+/* Reaction button active state */
+.reactions-section .btn-group .btn:active {
+  transform: scale(0.95);
+}
+
+/* Empty state icons */
+.display-1, .display-4 {
+  opacity: 0.5;
+}
+
+/* Profile avatar placeholder gradient */
+.bg-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+}
+
+/* Navbar dropdown animation */
+.dropdown-menu {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Post content images */
+.trix-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+}
+
+/* Rich text editor styling */
+trix-toolbar {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+trix-editor {
+  min-height: 300px;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.375rem;
+  padding: 1rem;
+}
+
+trix-editor:focus {
+  outline: none;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Badge animations */
+.badge {
+  transition: all 0.2s;
+}
+
+/* List group item hover */
+.list-group-item {
+  transition: background-color 0.2s;
+}
+
+.list-group-item:hover {
+  background-color: #f8fafc;
+}
+
+/* Footer spacing */
+main.container {
+  min-height: calc(100vh - 200px);
+}
+
+/* ================================
+   RTL (Right-to-Left) Support for Arabic
+   ================================ */
+[dir="rtl"] {
+  /* Text alignment */
+  text-align: right;
+}
+
+[dir="rtl"] .text-start {
+  text-align: right !important;
+}
+
+[dir="rtl"] .text-end {
+  text-align: left !important;
+}
+
+[dir="rtl"] .ms-1,
+[dir="rtl"] .ms-2,
+[dir="rtl"] .ms-3,
+[dir="rtl"] .ms-4,
+[dir="rtl"] .ms-5 {
+  margin-left: 0 !important;
+  margin-right: 0.25rem !important;
+}
+
+[dir="rtl"] .ms-2 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+[dir="rtl"] .me-2 {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+[dir="rtl"] .ms-lg-2 {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+[dir="rtl"] .ms-auto {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+[dir="rtl"] .me-auto {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+[dir="rtl"] .ms-1 {
+  margin-left: 0 !important;
+  margin-right: 0.25rem !important;
+}
+
+/* Dropdown menu alignment */
+[dir="rtl"] .dropdown-menu-end {
+  right: auto !important;
+  left: 0 !important;
+}
+
+/* Navbar adjustments */
+[dir="rtl"] .navbar-nav.ms-auto {
+  margin-right: 0 !important;
+  margin-left: auto !important;
+}
+
+[dir="rtl"] .navbar-toggler {
+  margin-right: auto !important;
+  margin-left: 0 !important;
+}
+
+/* Footer links icon adjustments */
+[dir="rtl"] .footer-links i,
+[dir="rtl"] .footer-contact i {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .footer-links a:hover {
+  transform: translateX(-5px);
+}
+
+[dir="rtl"] .footer-links a:hover i {
+  transform: scaleX(-1) translateX(-3px);
+}
+
+/* Search input group */
+[dir="rtl"] .input-group .form-control {
+  border-top-right-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.375rem !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+[dir="rtl"] .input-group .btn {
+  border-top-left-radius: 0.375rem !important;
+  border-bottom-left-radius: 0.375rem !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Trix editor RTL */
+[dir="rtl"] trix-editor,
+[dir="rtl"] .trix-content {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] trix-toolbar .trix-button-row {
+  direction: rtl;
+}
+
+/* Alert icons */
+[dir="rtl"] .alert i {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+/* Dropdown icons */
+[dir="rtl"] .dropdown-header i,
+[dir="rtl"] .dropdown-item i {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+/* Notification badge position */
+[dir="rtl"] .notification-badge {
+  left: 0 !important;
+  right: auto !important;
+  transform: translateX(50%) translateY(-50%) !important;
+}
+
+/* Avatar placeholder */
+[dir="rtl"] .avatar-placeholder,
+[dir="rtl"] .avatar-small {
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+/* Social links */
+[dir="rtl"] .social-links {
+  flex-direction: row-reverse;
+}
+
+/* List items with icons */
+[dir="rtl"] .footer-contact li {
+  flex-direction: row-reverse;
+}
+
+/* Chevron icons in RTL */
+[dir="rtl"] .bi-chevron-right {
+  transform: scaleX(-1);
+}

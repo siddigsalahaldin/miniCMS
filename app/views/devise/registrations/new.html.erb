@@ -1,0 +1,63 @@
+<% content_for :title, t("devise.registrations.sign_up") %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-5">
+        <div class="text-center mb-4">
+          <h1 class="h3 mb-2"><%= t("common.create_account") %></h1>
+          <p class="text-muted"><%= t("common.join_community") %></p>
+        </div>
+
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="mb-3">
+            <%= f.label :email, t("common.email"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: t("common.enter_email") %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :username, t("common.username"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <%= f.text_field :username, autocomplete: "username", class: "form-control", placeholder: t("common.choose_username") %>
+            </div>
+            <div class="form-text"><%= t("common.username_hint") %></div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password, t("common.password"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: t("common.create_password") %>
+            </div>
+            <% if @minimum_password_length %>
+              <div class="form-text"><%= t("common.password_hint", count: @minimum_password_length) %></div>
+            <% end %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :password_confirmation, t("common.confirm_password"), class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: t("common.confirm_your_password") %>
+            </div>
+          </div>
+
+          <%= f.submit t("nav.sign_up"), class: "btn btn-primary btn-lg w-100 mb-3" %>
+        <% end %>
+
+        <div class="text-center">
+          <p class="mb-0 text-muted">
+            <%= t("common.already_have_account") %>
+            <%= link_to t("nav.sign_in"), new_session_path(resource_name), class: "text-decoration-none" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

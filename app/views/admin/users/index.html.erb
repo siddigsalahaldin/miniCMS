@@ -1,0 +1,63 @@
+<% content_for :header_title, "Users" %>
+<% content_for :title, "Manage Users" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h5 class="mb-0"><%= @users.count %> Total Users</h5>
+  <div class="btn-group" role="group">
+    <%= link_to "All", admin_users_path, class: "btn btn-sm btn-outline-primary" %>
+    <%= link_to "Admins", admin_users_path(filter: 'admin'), class: "btn btn-sm btn-outline-primary" %>
+    <%= link_to "Moderators", admin_users_path(filter: 'moderator'), class: "btn btn-sm btn-outline-primary" %>
+  </div>
+</div>
+
+<div class="admin-table">
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Posts</th>
+        <th>Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <% if user.has_avatar? %>
+                <%= image_tag url_for(user.avatar), class: "rounded-circle", width: 32, height: 32 %>
+              <% else %>
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                  <%= user.username.first.upcase %>
+                </div>
+              <% end %>
+              <%= link_to user.username, admin_user_path(user), class: "text-decoration-none fw-medium" %>
+            </div>
+          </td>
+          <td class="text-muted"><%= user.email %></td>
+          <td>
+            <% if user.admin? %>
+              <span class="badge badge-soft-danger">Administrator</span>
+            <% elsif user.moderator? %>
+              <span class="badge badge-soft-warning">Moderator</span>
+            <% else %>
+              <span class="badge badge-soft-info">Member</span>
+            <% end %>
+          </td>
+          <td><span class="badge bg-secondary"><%= user.posts.count %></span></td>
+          <td class="text-muted small"><%= time_ago_in_words(user.created_at) %> ago</td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <%= link_to "View", admin_user_path(user), class: "btn btn-outline-secondary" %>
+              <%= link_to "Edit", edit_admin_user_path(user), class: "btn btn-outline-primary" %>
+              <%= button_to "Delete", admin_user_path(user), method: :delete, class: "btn btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

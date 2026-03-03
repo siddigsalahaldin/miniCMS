@@ -1,0 +1,7 @@
+<%= turbo_stream.update "notification-badge" do %>
+  <%# Badge will be hidden since all notifications are now read %>
+<% end %>
+
+<%= turbo_stream.update "notification-dropdown" do %>
+  <%= render partial: "shared/notification_dropdown", locals: { notifications: current_user.recent_unread_notifications(5) } %>
+<% end %>

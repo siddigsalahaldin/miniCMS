@@ -1,0 +1,57 @@
+<% content_for :title, "Followers of #{@user.username}" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-people"></i> Followers of <%= @user.username %></h5>
+        <%= link_to user_path(@user), class: "btn btn-outline-secondary btn-sm" do %>
+          <i class="bi bi-arrow-left"></i> Back
+        <% end %>
+      </div>
+      <div class="card-body">
+        <% if @followers.any? %>
+          <div class="row g-3">
+            <% @followers.each do |follow| %>
+              <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div class="flex-shrink-0">
+                        <% if follow.follower.has_avatar? %>
+                          <%= image_tag url_for(follow.follower.avatar), alt: follow.follower.username, class: "rounded-circle", width: 50, height: 50 %>
+                        <% else %>
+                          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <%= follow.follower.username.first.upcase %>
+                          </div>
+                        <% end %>
+                      </div>
+                      <div class="flex-grow-1 ms-3">
+                        <h6 class="mb-0">
+                          <%= link_to follow.follower.username, user_path(follow.follower), class: "text-decoration-none" %>
+                        </h6>
+                        <small class="text-muted">
+                          <i class="bi bi-clock"></i> <%= time_ago_in_words(follow.created_at) %> ago
+                        </small>
+                      </div>
+                      <div class="ms-2">
+                        <% if current_user && current_user != follow.follower %>
+                          <%= render partial: "shared/follow_button", locals: { user: follow.follower } %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-5">
+            <i class="bi bi-people display-4 text-muted"></i>
+            <p class="mt-3 text-muted">No followers yet.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

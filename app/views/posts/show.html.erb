@@ -1,0 +1,155 @@
+<% content_for :title, @post.title %>
+
+<article class="row">
+  <div class="col-lg-8">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4 p-md-5">
+        <header class="mb-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <h1 class="h2 mb-0"><%= @post.title %></h1>
+            <% unless @post.published? %>
+              <span class="badge bg-warning"><i class="bi bi-eye-slash"></i> <%= t("common.draft") %></span>
+            <% end %>
+          </div>
+          <div class="text-muted small">
+            <span class="me-3">
+              <i class="bi bi-person-circle"></i>
+              <%= link_to @post.user.username, user_path(@post.user), class: "text-decoration-none" %>
+              <%= render partial: "shared/follow_button", locals: { user: @post.user } %>
+            </span>
+            <span class="me-3">
+              <i class="bi bi-clock"></i> <%= time_ago_in_words_locale(@post.created_at) %>
+            </span>
+          </div>
+        </header>
+
+        <% if can_edit_post?(@post) %>
+          <div class="btn-group mb-4" role="group">
+            <%= link_to edit_post_path(@post), class: "btn btn-outline-secondary btn-sm" do %>
+              <i class="bi bi-pencil"></i> <%= t("common.edit") %>
+            <% end %>
+            <% if @post.published? %>
+              <%= button_to unpublish_post_path(@post), method: :patch, class: "btn btn-outline-secondary btn-sm" do %>
+                <i class="bi bi-eye-slash"></i> <%= t("common.unpublish") %>
+              <% end %>
+            <% else %>
+              <%= button_to publish_post_path(@post), method: :patch, class: "btn btn-outline-success btn-sm" do %>
+                <i class="bi bi-eye"></i> <%= t("common.publish") %>
+              <% end %>
+            <% end %>
+            <%= button_to @post, method: :delete, class: "btn btn-outline-danger btn-sm", form: { data: { turbo_confirm: t("common.confirm_delete") } } do %>
+              <i class="bi bi-trash"></i> <%= t("common.delete") %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="post-content mb-4">
+          <%= @post.body %>
+        </div>
+
+        <hr class="my-4">
+
+        <%# Reactions Section %>
+        <div class="reactions-section mb-4">
+          <h5 class="mb-3">
+            <i class="bi bi-emoji-smile"></i> <%= t("common.reactions") %>
+            <span class="badge bg-primary"><%= @post.total_reactions_count %></span>
+          </h5>
+
+          <% if current_user %>
+            <div class="btn-group flex-wrap mb-3" role="group">
+              <% Reaction.reaction_types.keys.each do |type| %>
+                <%= button_to "#{Reaction.new(reaction_type: type).emoji} #{type.humanize}",
+                              post_reactions_path(@post),
+                              method: :post,
+                              params: { reaction: { reaction_type: type } },
+                              class: "btn btn-outline-secondary btn-sm",
+                              form_class: "d-inline" %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if @reactions.any? %>
+            <div class="d-flex flex-wrap gap-2">
+              <% @reactions.group_by(&:reaction_type).each do |type, reactions| %>
+                <span class="badge bg-light text-dark border" title="<%= reactions.map { |r| r.user.username }.join(', ') %>">
+                  <%= Reaction.new(reaction_type: type).emoji %> <%= reactions.count %>
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Favorite Button %>
+        <% if current_user %>
+          <div class="favorite-section mb-4">
+            <% if current_user.favorite?(@post) %>
+              <%= button_to unfavorite_post_path(@post), method: :delete, class: "btn btn-warning btn-sm" do %>
+                <i class="bi bi-star-fill"></i> <%= t("common.unfavorite") %>
+              <% end %>
+            <% else %>
+              <%= button_to favorite_post_path(@post), method: :post, class: "btn btn-outline-warning btn-sm" do %>
+                <i class="bi bi-star"></i> <%= t("common.favorite") %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Comments Section %>
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h4 class="mb-0"><i class="bi bi-chat-left-text"></i> <%= t("common.comments") %> (<%= @post.comments.count %>)</h4>
+      </div>
+      <div class="card-body">
+        <% if current_user %>
+          <%= form_with model: [@post, @post.comments.build], local: true, class: "mb-4" do |f| %>
+            <div class="mb-3">
+              <%= f.text_area :body, placeholder: t("common.write_a_comment"), rows: 3, class: "form-control" %>
+            </div>
+            <%= f.submit t("common.post_comment"), class: "btn btn-primary" %>
+          <% end %>
+        <% else %>
+          <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> <%= link_to t("nav.sign_in"), new_user_session_path %> <%= t("common.sign_in_to_comment") %>
+          </div>
+        <% end %>
+
+        <div id="comments" class="comments-list" data-controller="reply">
+          <%= render @comments %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-person-circle"></i> <%= t("common.about_author") %></h5>
+      </div>
+      <div class="card-body text-center">
+        <% if @post.user.has_avatar? %>
+          <%= image_tag url_for(@post.user.avatar), alt: @post.user.username, class: "rounded-circle mb-3", width: 80, height: 80 %>
+        <% else %>
+          <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+            <%= @post.user.username.first.upcase %>
+          </div>
+        <% end %>
+        <h6 class="card-title"><%= @post.user.username %></h6>
+        <% if @post.user.bio.present? %>
+          <p class="card-text text-muted small"><%= @post.user.bio %></p>
+        <% end %>
+        <div class="d-flex justify-content-center gap-2 small text-muted">
+          <span><i class="bi bi-file-text"></i> <%= @post.user.posts.count %> <%= t("common.posts") %></span>
+          <span><i class="bi bi-people"></i> <%= @post.user.followers.count %> <%= t("common.followers") %></span>
+        </div>
+        <% if current_user && current_user != @post.user %>
+          <div class="mt-3">
+            <%= render partial: "shared/follow_button", locals: { user: @post.user } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</article>

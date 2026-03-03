@@ -1,0 +1,23 @@
+<% content_for :title, "Reply to Comment" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-reply"></i> Reply to Comment</h5>
+      </div>
+      <div class="card-body">
+        <%= form_with model: [@commentable, @comment], local: true do |f| %>
+          <div class="mb-3">
+            <%= f.text_area :body, placeholder: "Write your reply...", rows: 4, class: "form-control" %>
+          </div>
+          <%= f.hidden_field :parent_id, value: @comment.id if @comment.parent %>
+          <div class="d-flex gap-2">
+            <%= f.submit "Post Reply", class: "btn btn-primary" %>
+            <%= link_to "Cancel", [@commentable], class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

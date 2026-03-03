@@ -1,0 +1,202 @@
+<% content_for :title, t("search.title") %>
+
+<div class="search-page">
+  <!-- Search Header -->
+  <div class="search-header mb-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1 class="text-center mb-4">
+          <i class="bi bi-search"></i> <%= t("search.title") %>
+        </h1>
+
+        <%= form_with url: search_path, method: :get, local: true, class: "search-form" do %>
+          <div class="input-group input-group-lg">
+            <%= text_field_tag :q, @query,
+                class: "form-control",
+                placeholder: t("search.placeholder"),
+                autofocus: true %>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-search"></i> <%= t("search.button") %>
+            </button>
+          </div>
+
+          <% if @query.present? %>
+            <div class="search-filters mt-3">
+              <div class="btn-group" role="group">
+                <%= link_to t("search.filter_all"), search_path(q: @query, filter: 'all'),
+                    class: "btn btn-sm btn-outline-primary #{@filter == 'all' ? 'active' : ''}" %>
+                <%= link_to t("search.filter_posts"), search_path(q: @query, filter: 'posts'),
+                    class: "btn btn-sm btn-outline-primary #{@filter == 'posts' ? 'active' : ''}" %>
+                <%= link_to t("search.filter_users"), search_path(q: @query, filter: 'users'),
+                    class: "btn btn-sm btn-outline-primary #{@filter == 'users' ? 'active' : ''}" %>
+                <%= link_to t("search.filter_comments"), search_path(q: @query, filter: 'comments'),
+                    class: "btn btn-sm btn-outline-primary #{@filter == 'comments' ? 'active' : ''}" %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <% if @query.present? %>
+    <div class="search-results">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <!-- Results Summary -->
+          <div class="search-summary mb-4">
+            <p class="text-muted">
+              <%= t("common.results_for", count: @total, plural: @total == 1 ? '' : 's') %> "<strong><%= @query %></strong>"
+            </p>
+          </div>
+
+          <% if @total == 0 %>
+            <!-- No Results -->
+            <div class="no-results text-center py-5">
+              <i class="bi bi-emoji-frown display-4 text-muted"></i>
+              <h4 class="mt-3"><%= t("common.no_results_found") %></h4>
+              <p class="text-muted"><%= t("common.adjust_search") %></p>
+
+              <% if @popular_searches.present? %>
+                <div class="popular-searches mt-4">
+                  <h6 class="text-muted mb-3"><%= t("common.popular_searches") %></h6>
+                  <div class="d-flex flex-wrap gap-2 justify-content-center">
+                    <% @popular_searches.each do |term| %>
+                      <%= link_to term, search_path(q: term), class: "badge bg-light text-dark text-decoration-none" %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <!-- Results by Filter -->
+            <% if @filter == 'posts' || @filter == 'all' %>
+              <% if @posts.present? || (@results.respond_to?(:each) && @results.any?) %>
+                <div class="results-section mb-4">
+                  <h5 class="mb-3">
+                    <i class="bi bi-journal-text"></i> <%= t("search.filter_posts") %>
+                    <span class="badge bg-primary ms-2"><%= (@posts || @results).count %></span>
+                  </h5>
+                  <div class="list-group">
+                    <% (@posts || @results).each do |post| %>
+                      <div class="list-group-item list-group-item-action p-3">
+                        <div class="d-flex w-100 justify-content-between align-items-start">
+                          <div class="flex-grow-1">
+                            <h6 class="mb-1">
+                              <%= link_to post.title, post, class: "text-decoration-none" %>
+                            </h6>
+                            <p class="text-muted mb-1 small">
+                              <i class="bi bi-person"></i> <%= post.user.username %> &bull;
+                              <i class="bi bi-clock"></i> <%= time_ago_in_words_locale(post.created_at) %>
+                            </p>
+                            <p class="mb-0 text-muted small">
+                              <%= truncate(post.body.to_plain_text, length: 200) %>
+                            </p>
+                          </div>
+                          <div class="ms-3">
+                            <span class="badge bg-light text-dark">
+                              <i class="bi bi-heart"></i> <%= post.reactions.count %>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+
+            <% if @filter == 'users' || @filter == 'all' %>
+              <% if @users.present? %>
+                <div class="results-section mb-4">
+                  <h5 class="mb-3">
+                    <i class="bi bi-people"></i> <%= t("search.filter_users") %>
+                    <span class="badge bg-primary ms-2"><%= @users.count %></span>
+                  </h5>
+                  <div class="row g-3">
+                    <% @users.each do |user| %>
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="d-flex align-items-center">
+                              <% if user.has_avatar? %>
+                                <%= image_tag url_for(user.avatar), class: "rounded-circle me-3", width: 50, height: 50 %>
+                              <% else %>
+                                <div class="bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                  <%= user.username.first.upcase %>
+                                </div>
+                              <% end %>
+                              <div class="flex-grow-1">
+                                <h6 class="mb-0">
+                                  <%= link_to user.username, user_path(user), class: "text-decoration-none" %>
+                                </h6>
+                                <small class="text-muted">
+                                  <i class="bi bi-file-text"></i> <%= user.posts.count %> <%= t("common.posts") %>
+                                </small>
+                              </div>
+                              <% if current_user && current_user != user %>
+                                <%= render partial: "shared/follow_button", locals: { user: user } %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+
+            <% if @filter == 'comments' || @filter == 'all' %>
+              <% if @comments.present? %>
+                <div class="results-section mb-4">
+                  <h5 class="mb-3">
+                    <i class="bi bi-chat-left-text"></i> <%= t("search.filter_comments") %>
+                    <span class="badge bg-primary ms-2"><%= @comments.count %></span>
+                  </h5>
+                  <div class="list-group">
+                    <% @comments.each do |comment| %>
+                      <div class="list-group-item list-group-item-action p-3">
+                        <div class="d-flex w-100 justify-content-between align-items-start">
+                          <div class="flex-grow-1">
+                            <p class="mb-1"><%= comment.body %></p>
+                            <small class="text-muted">
+                              <i class="bi bi-person"></i> <%= comment.user.username %> &bull;
+                              <i class="bi bi-clock"></i> <%= time_ago_in_words_locale(comment.created_at) %>
+                              <% if comment.commentable.is_a?(Post) %>
+                                &bull; <%= t("common.on") %> <%= link_to comment.commentable.title, comment.commentable, class: "text-decoration-none" %>
+                              <% end %>
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <!-- Initial Search Page -->
+    <div class="search-initial text-center py-5">
+      <i class="bi bi-search display-1 text-muted"></i>
+      <h4 class="mt-3"><%= t("search.title") %> miniCMS</h4>
+      <p class="text-muted"><%= t("search.placeholder") %></p>
+
+      <% if @popular_searches.present? %>
+        <div class="popular-searches mt-4">
+          <h6 class="text-muted mb-3"><%= t("common.popular_searches") %></h6>
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <% @popular_searches.each do |term| %>
+              <%= link_to term, search_path(q: term), class: "badge bg-light text-dark text-decoration-none" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

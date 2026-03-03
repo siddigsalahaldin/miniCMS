@@ -1,0 +1,95 @@
+<% content_for :header_title, "User Details" %>
+<% content_for :title, @user.username %>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="admin-table p-4 text-center">
+      <% if @user.has_avatar? %>
+        <%= image_tag url_for(@user.avatar), class: "rounded-circle mb-3", width: 100, height: 100 %>
+      <% else %>
+        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px; font-size: 2.5rem;">
+          <%= @user.username.first.upcase %>
+        </div>
+      <% end %>
+      
+      <h4><%= @user.username %></h4>
+      <div class="mt-2">
+        <% if @user.admin? %>
+          <span class="badge badge-soft-danger">Administrator</span>
+        <% elsif @user.moderator? %>
+          <span class="badge badge-soft-warning">Moderator</span>
+        <% else %>
+          <span class="badge badge-soft-info">Member</span>
+        <% end %>
+      </div>
+      
+      <p class="text-muted mt-2"><%= @user.email %></p>
+      
+      <div class="d-flex justify-content-center gap-4 mt-3">
+        <div>
+          <div class="h5 mb-0"><%= @user.posts.count %></div>
+          <small class="text-muted">Posts</small>
+        </div>
+        <div>
+          <div class="h5 mb-0"><%= @user.comments.count %></div>
+          <small class="text-muted">Comments</small>
+        </div>
+        <div>
+          <div class="h5 mb-0"><%= @user.followers.count %></div>
+          <small class="text-muted">Followers</small>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <%= link_to "View Profile", user_path(@user), class: "btn btn-outline-primary", target: "_blank" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-8">
+    <div class="admin-table p-4 mb-4">
+      <h6 class="mb-3">User Information</h6>
+      <dl class="row mb-0">
+        <dt class="col-sm-3">Username</dt>
+        <dd class="col-sm-9"><%= @user.username %></dd>
+        
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9"><%= @user.email %></dd>
+        
+        <dt class="col-sm-3">Bio</dt>
+        <dd class="col-sm-9"><%= @user.bio.presence || "No bio" %></dd>
+        
+        <dt class="col-sm-3">Joined</dt>
+        <dd class="col-sm-9"><%= @user.created_at.strftime("%B %d, %Y") %></dd>
+        
+        <dt class="col-sm-3">Last Sign In</dt>
+        <dd class="col-sm-9"><%= @user.respond_to?(:current_sign_in_at) ? (@user.current_sign_in_at&.strftime("%B %d, %Y %H:%M") || "Never") : "N/A" %></dd>
+      </dl>
+    </div>
+    
+    <div class="admin-table p-4">
+      <h6 class="mb-3">Recent Posts (<%= @user.posts.count %>)</h6>
+      <% if @user.posts.any? %>
+        <div class="list-group list-group-flush">
+          <% @user.posts.recent.limit(5).each do |post| %>
+            <%= link_to admin_post_path(post), class: "list-group-item list-group-item-action px-0" do %>
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1"><%= post.title %></h6>
+                <small>
+                  <% if post.published? %>
+                    <span class="badge badge-soft-success">Published</span>
+                  <% else %>
+                    <span class="badge badge-soft-warning">Draft</span>
+                  <% end %>
+                </small>
+              </div>
+              <small class="text-muted"><%= time_ago_in_words(post.created_at) %> ago</small>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-muted small mb-0">No posts yet.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="comment mb-3 pb-3 border-bottom" id="comment-<%= comment.id %>">
+  <div class="d-flex align-items-start mb-2">
+    <div class="flex-shrink-0">
+      <% if comment.user.has_avatar? %>
+        <%= image_tag url_for(comment.user.avatar), alt: comment.user.username, class: "rounded-circle", width: 40, height: 40 %>
+      <% else %>
+        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+          <%= comment.user.username.first.upcase %>
+        </div>
+      <% end %>
+    </div>
+    <div class="flex-grow-1 ms-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-semibold">
+          <%= link_to comment.user.username, user_path(comment.user), class: "text-decoration-none" %>
+        </span>
+        <small class="text-muted"><%= time_ago_in_words_locale(comment.created_at) %></small>
+        <% if comment.parent %>
+          <small class="text-muted">
+            <i class="bi bi-reply"></i> <%= t("common.reply_to") %> <%= link_to comment.parent.user.username, user_path(comment.parent.user), class: "text-decoration-none" %>
+          </small>
+        <% end %>
+      </div>
+      <div class="comment-body mt-2">
+        <%= comment.body %>
+      </div>
+      <div class="comment-actions mt-2">
+        <% if current_user %>
+          <%= button_tag type: "button", class: "btn btn-sm btn-link text-decoration-none", data: { action: "click->reply#toggle", comment_id: comment.id } do %>
+            <i class="bi bi-reply"></i> <%= t("common.reply") %>
+          <% end %>
+          <% if can_edit_comment?(comment) %>
+            <%= link_to edit_comment_path(comment), class: "btn btn-sm btn-link text-decoration-none" do %>
+              <i class="bi bi-pencil"></i> <%= t("common.edit") %>
+            <% end %>
+            <%= button_to comment_path(comment), method: :delete, class: "btn btn-sm btn-link text-decoration-none text-danger", form: { data: { turbo_confirm: t("common.delete_comment_confirm") } } do %>
+              <i class="bi bi-trash"></i> <%= t("common.delete") %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- Reply Form (hidden by default) -->
+      <% if current_user %>
+        <div id="reply-form-<%= comment.id %>" class="reply-form mt-3" style="display: none;">
+          <%= form_with model: [@post, @post.comments.build],
+                        local: true,
+                        class: "reply-form-inner",
+                        html: { data: { turbo: false } } do |f| %>
+            <div class="mb-2">
+              <%= f.hidden_field :parent_id, value: comment.id %>
+              <%= f.text_area :body,
+                              placeholder: t("common.write_a_reply"),
+                              rows: 2,
+                              class: "form-control form-control-sm" %>
+            </div>
+            <div class="d-flex gap-2">
+              <%= f.submit t("common.post_reply"), class: "btn btn-sm btn-primary" %>
+              <button type="button" class="btn btn-sm btn-secondary" data-action="click->reply#cancel" data-comment-id="<%= comment.id %>"><%= t("common.cancel") %></button>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if comment.replies.any? %>
+    <div class="comment-replies ms-5 mt-3">
+      <%= render comment.replies %>
+    </div>
+  <% end %>
+</div>
