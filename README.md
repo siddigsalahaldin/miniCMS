@@ -293,6 +293,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+## 📸 Screenshots
+
+### Home Page
+![Home Page](screenshots/Screenshot%20From%202026-03-10%2019-39-32.png)
+
+### Post Display
+![Post Display](screenshots/Screenshot%20From%202026-03-10%2019-40-12.png)
+
+### Create Post
+![Create Post](screenshots/Screenshot%20From%202026-03-10%2019-41-42.png)
+
+### User Profile
+![User Profile](screenshots/Screenshot%20From%202026-03-10%2019-42-10.png)
+
+### Notifications
+![Notifications](screenshots/Screenshot%20From%202026-03-10%2019-42-40.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/Screenshot%20From%202026-03-10%2019-42-51.png)
+
+### Settings
+![Settings](screenshots/Screenshot%20From%202026-03-10%2019-43-03.png)
+
 ## 🙏 Acknowledgments
 
 - [Ruby on Rails](https://rubyonrails.org/) - The web framework
