@@ -6,7 +6,7 @@
 
 A modern, lightweight Content Management System (CMS) and blogging platform built with Ruby on Rails 8.1. miniCMS provides a clean, intuitive interface for creating, managing, and sharing content with ease.
 
-![miniCMS Banner](app/assets/images/banner.png)
+![miniCMS Banner](screenshots/Screenshot%20From%202026-03-10%2019-39-32.png)
 
 ## ✨ Features
 
